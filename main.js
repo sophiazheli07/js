@@ -1,4 +1,5 @@
 const input = document.getElementById("input");
+const clear = document.getElementById("clear");
 const calculateButton = document.getElementById("calculate")
 
 const calculationButtons = Array.from(document.getElementsByClassName("calculation"));
@@ -19,4 +20,8 @@ numberButtons.forEach((el) => {
 
 calculateButton.onclick = function () {
     input.value = eval(input.value);
+}
+
+clear.onclick = function clearScreen() {
+    document.getElementById('input').value = ''
 }

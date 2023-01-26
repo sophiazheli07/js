@@ -1,43 +1,61 @@
 body {
     margin: 0;
     padding: 0;
-    width: 100vw;
-    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: linear-gradient(30deg, rgb(242, 243, 193), lightskyblue);
+    background: rgb(27, 25, 37);
 }
 
 .calc{
-    width: 200px;
-    height: 800px;
+    width: 300px;
+    height: 1000px;
     -moz-image-region: auto;
+    margin-top: 50px;
 }
 section{
     display: flex;
     width: 100%;
     flex-wrap: wrap;
     height: auto;
+    background: #000;
+    justify-content: center;
+    padding-bottom: 8px;
+
+
 }
 
 section > button{
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid black;
+    border-radius: 50%;
+    font-weight: 500;
+    font-size: 20px;
+    margin: 1px;
+    
 }
 #calculate{
-    width: 100px;
+    width: 70px;
 
 }
 input{
-    width: calc(200px - 8px);
-    font-size: 25px;
+    width: 283px;
+    font-size: 40px;
+    background: #000;
+    border: none;
+    color: aliceblue;
+    padding-left: 15px;
+    padding-top: 5px;
 }
 .calculation{
     background: gray;
+}
+#clear{
+    background: rgb(245, 137, 13);
+    font-size: 30px;
+    color: aliceblue;
 }
