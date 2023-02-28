@@ -1,0 +1,23 @@
+body {
+    transition: 0.3s all;
+    background: #000;
+}
+h1 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: white;
+    font-weight: 900;
+
+}
+button {
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+}
+.square{
+    margin: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: aqua;
+}
