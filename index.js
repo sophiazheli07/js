@@ -1,4 +1,11 @@
+
 // DOM document object model
+
+
+// window.onload = () => {
+//     alert("Hello I am loaded");
+
+
 
 // const h1 = document.getElementById("h1");
 // console.log(h1);
@@ -118,3 +125,27 @@ addSquareButton.onclick = () => {
     counter = counter + 1;
 };
 
+window.onblur = () => {
+    document.title = "Hey come back"
+}
+
+window.onfocus = () => {
+    document.title = "Hey bitch"
+}
+
+window.onclose = () => {
+
+}
+
+const googleButton = document.querySelector("#google-button");
+
+googleButton.onclick = () => {
+    // window.open("https://google.com")
+    window.location = "https://google.com"
+};
+
+setTimeout(() => {
+    window.open = "https://google.com"
+}, 3000)
+
+// };  // onload
