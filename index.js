@@ -46,3 +46,8 @@ createButton.onclick = () => {
 }
 
 // function declaration функція замість константи достпупна всюди до і після її написання renderUsers();
+
+// const rateButtonOne = document.getElementById("#rate-one");
+// rateButtonOne.onclick = () => {
+//     alert("!")
+// }
