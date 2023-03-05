@@ -2,6 +2,7 @@ const nameInput = document.querySelector("#name");
 const ageInput = document.querySelector("#age");
 const createButton = document.querySelector("#create");
 const usersSection = document.querySelector("#users-section");
+const cityInput = document.querySelector("#city")
 
 let users = [];
 
@@ -15,8 +16,10 @@ function renderUsers () {
     usersSection.innerHTML = "";
 
     const usersContent = users.map((user) => `<div class="user-card">
+        <p>${"SENT TO PENTAGON: "}</p>
         <p>${user.name}</p>
         <span>${user.age}</span>
+        <p>${user.city}</p>
         <button class="delete-user-button">Remove</button>
     </div>`);
 
@@ -35,12 +38,14 @@ function renderUsers () {
 createButton.onclick = () => {
     const name = nameInput.value;
     const age = +ageInput.value;
+    const city = cityInput.value;
 
-    const user = {name: name, age: age};
+    const user = {name: name, age: age, city: city};
     users.push(user);
     
     nameInput.value = "";
     ageInput.value = "";
+    cityInput.value = "";
 
     renderUsers();
 }
