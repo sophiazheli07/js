@@ -3,6 +3,7 @@ body{
     background: dimgray;
     font-family: 'Ubuntu', sans-serif;
     background-color: #2d545e;
+
 }
 
 input ,button{
@@ -25,7 +26,7 @@ input ,button{
     font-size: 20px;
     padding-bottom: 15px;
     padding-left: 15px;
-    min-width: 300px;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,7 +43,6 @@ main{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    margin-right: 100px;
 }
 h1{
     text-align: center;
@@ -52,6 +52,7 @@ h1{
 #users-section{
     margin: 10px;
 }
+
 .user-card p{
     margin-right: 8px;
     margin-left: 8px;
@@ -60,3 +61,18 @@ h1{
 input{
     outline: none;
 } */
+
+label{
+    color: #e1b382;
+    font-size: 20px;
+}
+
+.body-wrap{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.input-wrap{
+    margin-right: 10px;
+    margin-top: 5px;
+}

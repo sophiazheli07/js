@@ -6,23 +6,46 @@ const cityInput = document.querySelector("#city");
 const searchInput = document.querySelector("#search");
 // const searchButton = document.querySelector("#search-button")
 const cancelButton = document.querySelector("#cancel-button");
-const sortByName = document.querySelector("#sort-by-name")
-let users = [];
+const sortByName = document.querySelector("#sort-by-name");
+const sortByAge = document.querySelector("#sort-by-age");
+let users = [
+  { name: "Igor", city: "Kyiv", age: 20 },
+  { name: "Alex", city: "Kyiv", age: 50 },
+  { name: "Oleg", city: "Kyiv", age: 10 },
+];
 
-// { name: "Igor", city: "Kyiv", age: "23"}, { name: "Alex", city: "Kyiv", age: "20"}, { name: "Sophia", city: "Kyiv", age: "15"}
+let changingUser = undefined;
+
+renderUsers(users);
+
 const deleteUser = (inexOfUsers) => {
   users = users.filter((el, i) => i !== inexOfUsers);
   renderUsers(users);
 };
 
 const editUser = (indexOfUser) => {
-    changingUser = {data: users[indexOfUser], index: indexOfUser};
-    createButton.textContent = "Save changes";
+  changingUser = { data: users[indexOfUser], index: indexOfUser };
+  createButton.textContent = "Save changes";
 
-    nameInput.value = changingUser.data.name;
-    ageInput.value = changingUser.data.age;
-    cityInput.value = changingUser.data.city;
-  };
+  nameInput.value = changingUser.data.name;
+  ageInput.value = changingUser.data.age;
+  cityInput.value = changingUser.data.city;
+};
+
+const sorting = {
+  names: () => {
+    const usersCopy = [...users];
+    usersCopy.sort((user1, user2) => user1.name.localeCompare(user2.name));
+    renderUsers(usersCopy);
+  },
+};
+const sortingAge = {
+  age: () => {
+    const usersCopy = [...users];
+    usersCopy.sort((a, b) => a.age - b.age);
+    renderUsers(usersCopy);
+  },
+};
 
 
 function renderUsers(usersToRender) {
@@ -45,9 +68,6 @@ function renderUsers(usersToRender) {
 
   const dleeteButton = [...document.querySelectorAll(".delete-user-button")];
 
-
-
-
   dleeteButton.forEach((el, i) => {
     el.onclick = () => deleteUser(i);
   });
@@ -58,13 +78,6 @@ function renderUsers(usersToRender) {
     button.onclick = () => editUser(i);
   });
 }
-const sorting = {
-    names: () => {
-        const usersCopy = [...users];
-        usersCopy.sort((user1, user2) => user1.name.localeComapre(user2.name));
-        renderUsers(usersCopy);
-    }
-  }
 
 createButton.onclick = () => {
   const name = nameInput.value;
@@ -73,9 +86,9 @@ createButton.onclick = () => {
 
   if (changingUser) {
     users[changingUser.index] = {
-        name: name,
-        age: age,
-        city: city
+      name: name,
+      age: age,
+      city: city,
     };
 
     changingUser = undefined;
@@ -92,20 +105,7 @@ createButton.onclick = () => {
   renderUsers(users);
 };
 
-// COMMENTED FOR SECOND WAY OF SOLVING
 
-// searchButton.onclick = () => {
-//     const usersToRender = users.filter((user) => user.name.includes(searchInput.value));
-//     console.log(usersToRender);
-//     renderUsers(usersToRender);
-// }
-
-// cancelButton.onclick = () => {
-//     renderUsers(users)
-//     searchInput.value = "";
-// }
-
-// SECOND way without btn
 
 searchInput.oninput = (event) => {
   const usersToRender = users.filter(({ name, age, city }) =>
@@ -117,16 +117,18 @@ searchInput.oninput = (event) => {
 };
 
 sortByName.onchange = (event) => {
-    if (event.target.checked) {
-        sorting.names()
-    } else {
-        renderUsers(users)
-    }
-}
+  if (event.target.checked) {
+    sorting.names();
+  } else {
+    renderUsers(users);
+  }
+};
+sortByAge.onchange = (event) => {
+  if (event.target.checked) {
+    sortingAge.age();
+  } else {
+    renderUsers(users);
+  }
+};
 
-// function declaration функція замість константи достпупна всюди до і після її написання renderUsers();
 
-// const rateButtonOne = document.getElementById("#rate-one");
-// rateButtonOne.onclick = () => {
-//     alert("!")
-// }
