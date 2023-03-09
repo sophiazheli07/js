@@ -8,13 +8,27 @@ const searchInput = document.querySelector("#search");
 const cancelButton = document.querySelector("#cancel-button");
 const sortByName = document.querySelector("#sort-by-name");
 const sortByAge = document.querySelector("#sort-by-age");
+const pagination = document.querySelector("#pagination");
 let users = [
+  { name: "Igor", city: "Kyiv", age: 20 },
+  { name: "Alex", city: "Kyiv", age: 50 },
+  { name: "Oleg", city: "Kyiv", age: 10 },
+  { name: "Igor", city: "Kyiv", age: 20 },
+  { name: "Alex", city: "Kyiv", age: 50 },
+  { name: "Oleg", city: "Kyiv", age: 10 },
+  { name: "Igor", city: "Kyiv", age: 20 },
+  { name: "Alex", city: "Kyiv", age: 50 },
+  { name: "Oleg", city: "Kyiv", age: 10 },
+  { name: "Igor", city: "Kyiv", age: 20 },
+  { name: "Alex", city: "Kyiv", age: 50 },
+  { name: "Oleg", city: "Kyiv", age: 10 },
   { name: "Igor", city: "Kyiv", age: 20 },
   { name: "Alex", city: "Kyiv", age: 50 },
   { name: "Oleg", city: "Kyiv", age: 10 },
 ];
 
 let changingUser = undefined;
+let paginationPageNumber = 0;
 
 renderUsers(users);
 
@@ -31,6 +45,16 @@ const editUser = (indexOfUser) => {
   ageInput.value = changingUser.data.age;
   cityInput.value = changingUser.data.city;
 };
+function renderPagination (usersQuantity) {
+  for (let i = 0; i < usersQuantity / 3; i++) {
+    const button = document.createElement("button");
+    button.textContent = i+1;
+    button.onclick = () => {
+      paginationPageNumber = i;
+    }
+    pagination.appendChild(button);
+  }
+}
 
 const sorting = {
   names: () => {
@@ -47,9 +71,18 @@ const sortingAge = {
   },
 };
 
-
-function renderUsers(usersToRender) {
+function renderUsers(usersToRender, size) {
   usersSection.innerHTML = "";
+  const userCopy = [...users];
+//   for (index = 0; index < usersToRender.length; index += size) {
+//     res = usersToRender.slice(index, index+size);
+//     userCopy.push(res);
+//     console.log(userCopy)
+// }
+let temporary = [];
+for (var i = 0; i < this.length; i+= size){
+  temporary.push(this.slice(i,i+size));
+}
 
   const usersContent = usersToRender.map(
     (user) => `<div class="user-card">
@@ -77,6 +110,7 @@ function renderUsers(usersToRender) {
   editButtons.forEach((button, i) => {
     button.onclick = () => editUser(i);
   });
+  renderPagination(users.length);
 }
 
 createButton.onclick = () => {
@@ -102,10 +136,12 @@ createButton.onclick = () => {
   ageInput.value = "";
   cityInput.value = "";
 
+  if (!name || !age || !city) {
+    return alert("Please fill all required data");
+  }
+
   renderUsers(users);
 };
-
-
 
 searchInput.oninput = (event) => {
   const usersToRender = users.filter(({ name, age, city }) =>
@@ -127,10 +163,99 @@ sortByName.onchange = (event) => {
 sortByAge.onchange = (event) => {
   if (event.target.checked) {
     sortingAge.age();
-    sortByName.checked = false
+    sortByName.checked = false;
   } else {
     renderUsers(users);
   }
 };
+
+// const onClickEvent = document.body.addEventListener("click", () => {
+//   alert("Hello")
+// });
+
+// document.body.removeEventListener("click", onClickEvent);
+// document.body.addEventListener("click", () => {
+//   alert("No")
+// })
+
+//  IMPORTANT           IMPORTANT           IMPORTANT
+
+// document.body.onclick = () => {
+//   alert("Hello");
+// }
+// document.body.onclick = null
+
+// document.body.ondblclick = () => {
+//   alert("hello btch");
+// }
+
+// document.body.onresize = () => {
+//   alert(`resize ${window.innerWidth} ${window.innerHeight}` );
+
+// }
+
+// document.body.onscroll = () => {
+//   alert(`scroll ${window.scrollX} ${window.scrollY}`);
+// }
+
+// const scrollUpBtn = document.querySelector("#scroll-up");
+// const newButton = document.createElement("button")
+// // scrollUpBtn.remove();
+// newButton.onmouseenter = () => {
+//   console.log("HOVERED")
+// }
+// newButton.onmouseleave = () => {
+//   console.log("UNHOVERED")
+// }
+// scrollUpBtn.replaceWith(newButton)
+
+// scrollUpBtn.onclick = () => {
+//   window.scrollTo({top: 0, behavior: "smooth"});
+// }
+
+// let interval;
+
+// scrollUpBtn.onmousedown = () => {
+//   console.log("hello down");
+//   // interval = setInterval(() => {
+//   //   window.scrollTo({ top: window.scrollY + 10 });
+//   // }, 1500);
+  
+// };
+// scrollUpBtn.onmouseup = () => {
+//   console.log("hello up");
+//   // clearInterval(interval);
+// };
+
+// document.body.onpaste = () => {
+//   alert("paste");
+// }
+// document.body.oncopy = (e) => {
+//   alert("copy");
+//   e.preventDefault();
+// }
+
+// document.body.onmousemove = (e) => {
+//   console.log(e.pageX, e.pageY, e.target);
+// }
+
+// document.body.oncontextmenu = (e) => {
+//   console.log("gggg");
+//   e.preventDefault()
+// }
+
+// document.body.onkeypress = (e) => {
+//   console.log("key pressed", e.key);
+// }
+// document.body.onkeydown = (e) => {
+//   console.log("key pressed", e.key);
+// }
+// document.body.onkeyup = (e) => {
+//   console.log("key pressed", e.key);
+// }
+
+// window.onerror = () => {
+//   alert("!!!!")
+// }
 
 
