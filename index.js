@@ -71,18 +71,20 @@ const sortingAge = {
   },
 };
 
-function renderUsers(usersToRender, size) {
+function renderUsers(usersToRender) {
   usersSection.innerHTML = "";
-  const userCopy = [...users];
-//   for (index = 0; index < usersToRender.length; index += size) {
-//     res = usersToRender.slice(index, index+size);
-//     userCopy.push(res);
-//     console.log(userCopy)
+// FIRST WAY 
+// let temporary = [];
+// for (let i = 0; i < Math.ceil(usersToRender.length/3); i++){ // Using Math.ceil() I am returning rounded up numbers
+//   temporary[i] = usersToRender.slice((i*3), (i*3) + 3);
 // }
-let temporary = [];
-for (var i = 0; i < this.length; i+= size){
-  temporary.push(this.slice(i,i+size));
+// console.log(temporary)
+// SECOND WAY
+let subarray = [];
+for (let i = 0; i < usersToRender.length; i += 3) {
+  subarray.push(usersToRender.slice(i, i + 3));
 }
+console.log(subarray)
 
   const usersContent = usersToRender.map(
     (user) => `<div class="user-card">
