@@ -119,6 +119,7 @@ searchInput.oninput = (event) => {
 sortByName.onchange = (event) => {
   if (event.target.checked) {
     sorting.names();
+    sortByAge.checked = false;
   } else {
     renderUsers(users);
   }
@@ -126,6 +127,7 @@ sortByName.onchange = (event) => {
 sortByAge.onchange = (event) => {
   if (event.target.checked) {
     sortingAge.age();
+    sortByName.checked = false
   } else {
     renderUsers(users);
   }
