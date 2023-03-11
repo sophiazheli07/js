@@ -74,12 +74,15 @@ const sortingAge = {
 function renderUsers(usersToRender) {
   usersSection.innerHTML = "";
 // FIRST WAY 
+
 // let temporary = [];
 // for (let i = 0; i < Math.ceil(usersToRender.length/3); i++){ // Using Math.ceil() I am returning rounded up numbers
 //   temporary[i] = usersToRender.slice((i*3), (i*3) + 3);
 // }
 // console.log(temporary)
+
 // SECOND WAY
+
 let subarray = [];
 for (let i = 0; i < usersToRender.length; i += 3) {
   subarray.push(usersToRender.slice(i, i + 3));
