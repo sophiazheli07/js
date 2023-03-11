@@ -73,6 +73,8 @@ const sortingAge = {
 
 function renderUsers(usersToRender) {
   usersSection.innerHTML = "";
+  
+// HW Написати функцію (логіку, що розбиває масив з користувачами на підмасиви по 3 користувачі у кожному)
 // FIRST WAY 
 
 // let temporary = [];
