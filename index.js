@@ -27,11 +27,11 @@ let changingUser = undefined;
 let paginationPageNumber = 0;
 
 renderUsers(users);
-renderPagination(users.length)
+renderPagination(users.length);
 
 const deleteUser = (inexOfUsers) => {
   users = users.filter((el, i) => i !== inexOfUsers);
-  renderUsers(users);
+  renderUsers();
 };
 
 const editUser = (indexOfUser) => {
@@ -44,18 +44,20 @@ const editUser = (indexOfUser) => {
 };
 
 function renderPagination(usersQuantity) {
+  const buttonQuantity = !usersQuantity % 3 ? usersQuantity / 3 : (usersQuantity / 3) + 1;
+
   for (let i = 0; i < usersQuantity / 3; i++) {
     const button = document.createElement("button");
     button.textContent = i + 1;
     button.onclick = () => {
       paginationPageNumber = i;
-      const groupedUsers = groupElementsOfArray(users, 3)
-      renderUsers(groupedUsers[i]);
+      const groupedUsers = groupElementsOfArray(users, 3);
+      renderUsers();
     };
     pagination.appendChild(button);
   }
   // render first 3 users permanently
-  renderUsers(groupElementsOfArray(users, 3)[0])
+  renderUsers(groupElementsOfArray(users, 3)[0]);
 }
 
 const sorting = {
@@ -90,24 +92,22 @@ function groupElementsOfArray(arr, oneSetQuantity = 3) {
   }
 
   return result.filter((arr) => arr.length > 0);
-};
+}
 
-
-function renderUsers(usersToRender) {
+function renderUsers(
+  usersToRender = groupElementsOfArray(users, 3)[paginationPageNumber]
+) {
   usersSection.innerHTML = "";
 
-// HW Написати функцію (логіку, що розбиває масив з користувачами на підмасиви по 3 користувачі у кожному)
-// FIRST WAY 
-  
+  // HW Написати функцію (логіку, що розбиває масив з користувачами на підмасиви по 3 користувачі у кожному)
+  // FIRST WAY
+
   // FIRST WAY
   // let temporary = [];
   // for (let i = 0; i < Math.ceil(usersToRender.length/3); i++){ // Using Math.ceil() I am returning rounded up numbers
   //   temporary[i] = usersToRender.slice((i*3), (i*3) + 3);
   // }
   // console.log(temporary)
-
-  
-
 
   // SECOND WAY
   // let subarray = [];
@@ -171,10 +171,11 @@ createButton.onclick = () => {
     return alert("Please fill all required data");
   }
 
-  renderUsers(users);
+  renderUsers();
 };
 
 searchInput.oninput = (event) => {
+  if (!event.target.value) return renderUsers();
   const usersToRender = users.filter(({ name, age, city }) =>
     [name, age.toString(), city].some((element) =>
       element.includes(event.target.value)
