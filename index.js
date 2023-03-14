@@ -95,7 +95,9 @@ function groupElementsOfArray(arr, oneSetQuantity = 3) {
 
 function renderUsers(usersToRender) {
   usersSection.innerHTML = "";
-  // ==============================homework==============================
+
+// HW Написати функцію (логіку, що розбиває масив з користувачами на підмасиви по 3 користувачі у кожному)
+// FIRST WAY 
   
   // FIRST WAY
   // let temporary = [];
@@ -103,6 +105,9 @@ function renderUsers(usersToRender) {
   //   temporary[i] = usersToRender.slice((i*3), (i*3) + 3);
   // }
   // console.log(temporary)
+
+  
+
 
   // SECOND WAY
   // let subarray = [];
