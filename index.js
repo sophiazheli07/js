@@ -9,28 +9,25 @@ const cancelButton = document.querySelector("#cancel-button");
 const sortByName = document.querySelector("#sort-by-name");
 const sortByAge = document.querySelector("#sort-by-age");
 const pagination = document.querySelector("#pagination");
+
 let users = [
   { name: "Igor", city: "Kyiv", age: 20 },
   { name: "Alex", city: "Kyiv", age: 50 },
   { name: "Oleg", city: "Kyiv", age: 10 },
-  { name: "Igor", city: "Kyiv", age: 20 },
+  { name: "Sophia", city: "Kyiv", age: 20 },
   { name: "Alex", city: "Kyiv", age: 50 },
   { name: "Oleg", city: "Kyiv", age: 10 },
-  { name: "Igor", city: "Kyiv", age: 20 },
+  { name: "Alina", city: "Kyiv", age: 20 },
   { name: "Alex", city: "Kyiv", age: 50 },
   { name: "Oleg", city: "Kyiv", age: 10 },
-  { name: "Igor", city: "Kyiv", age: 20 },
-  { name: "Alex", city: "Kyiv", age: 50 },
-  { name: "Oleg", city: "Kyiv", age: 10 },
-  { name: "Igor", city: "Kyiv", age: 20 },
-  { name: "Alex", city: "Kyiv", age: 50 },
-  { name: "Oleg", city: "Kyiv", age: 10 },
+  { name: "Yana", city: "Kyiv", age: 10 },
 ];
 
 let changingUser = undefined;
 let paginationPageNumber = 0;
 
 renderUsers(users);
+renderPagination(users.length)
 
 const deleteUser = (inexOfUsers) => {
   users = users.filter((el, i) => i !== inexOfUsers);
@@ -45,15 +42,20 @@ const editUser = (indexOfUser) => {
   ageInput.value = changingUser.data.age;
   cityInput.value = changingUser.data.city;
 };
-function renderPagination (usersQuantity) {
+
+function renderPagination(usersQuantity) {
   for (let i = 0; i < usersQuantity / 3; i++) {
     const button = document.createElement("button");
-    button.textContent = i+1;
+    button.textContent = i + 1;
     button.onclick = () => {
       paginationPageNumber = i;
-    }
+      const groupedUsers = groupElementsOfArray(users, 3)
+      renderUsers(groupedUsers[i]);
+    };
     pagination.appendChild(button);
   }
+  // render first 3 users permanently
+  renderUsers(groupElementsOfArray(users, 3)[0])
 }
 
 const sorting = {
@@ -71,23 +73,43 @@ const sortingAge = {
   },
 };
 
+// const groupElementsOfArray = (usersToRender) => {
+//   let subarray = [];
+//   for (let i = 0; i < usersToRender.length; i += 3) {
+//     subarray.push(usersToRender.slice(i, i + 3));
+//   }
+//   return subarray.filter((arr) => arr.length > 0);
+// }
+// console.log(groupElementsOfArray(users,3))
+
+function groupElementsOfArray(arr, oneSetQuantity = 3) {
+  const result = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    result.push(arr.slice(i * oneSetQuantity, (i + 1) * oneSetQuantity));
+  }
+
+  return result.filter((arr) => arr.length > 0);
+};
+
+
 function renderUsers(usersToRender) {
   usersSection.innerHTML = "";
-// FIRST WAY 
+  // ==============================homework==============================
+  
+  // FIRST WAY
+  // let temporary = [];
+  // for (let i = 0; i < Math.ceil(usersToRender.length/3); i++){ // Using Math.ceil() I am returning rounded up numbers
+  //   temporary[i] = usersToRender.slice((i*3), (i*3) + 3);
+  // }
+  // console.log(temporary)
 
-// let temporary = [];
-// for (let i = 0; i < Math.ceil(usersToRender.length/3); i++){ // Using Math.ceil() I am returning rounded up numbers
-//   temporary[i] = usersToRender.slice((i*3), (i*3) + 3);
-// }
-// console.log(temporary)
-
-// SECOND WAY
-
-let subarray = [];
-for (let i = 0; i < usersToRender.length; i += 3) {
-  subarray.push(usersToRender.slice(i, i + 3));
-}
-console.log(subarray)
+  // SECOND WAY
+  // let subarray = [];
+  // for (let i = 0; i < usersToRender.length; i += 3) {
+  //   subarray.push(usersToRender.slice(i, i + 3));
+  // }
+  // console.log(subarray)
 
   const usersContent = usersToRender.map(
     (user) => `<div class="user-card">
@@ -115,7 +137,6 @@ console.log(subarray)
   editButtons.forEach((button, i) => {
     button.onclick = () => editUser(i);
   });
-  renderPagination(users.length);
 }
 
 createButton.onclick = () => {
@@ -225,7 +246,7 @@ sortByAge.onchange = (event) => {
 //   // interval = setInterval(() => {
 //   //   window.scrollTo({ top: window.scrollY + 10 });
 //   // }, 1500);
-  
+
 // };
 // scrollUpBtn.onmouseup = () => {
 //   console.log("hello up");
@@ -262,5 +283,3 @@ sortByAge.onchange = (event) => {
 // window.onerror = () => {
 //   alert("!!!!")
 // }
-
-
