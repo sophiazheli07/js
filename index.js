@@ -11,17 +11,27 @@ const sortByAge = document.querySelector("#sort-by-age");
 const pagination = document.querySelector("#pagination");
 
 let users = [
-  { name: "Igor", city: "Kyiv", age: 20 },
-  { name: "Alex", city: "Kyiv", age: 50 },
-  { name: "Oleg", city: "Kyiv", age: 10 },
-  { name: "Sophia", city: "Kyiv", age: 20 },
-  { name: "Alex", city: "Kyiv", age: 50 },
-  { name: "Oleg", city: "Kyiv", age: 10 },
-  { name: "Alina", city: "Kyiv", age: 20 },
-  { name: "Alex", city: "Kyiv", age: 50 },
-  { name: "Oleg", city: "Kyiv", age: 10 },
-  { name: "Yana", city: "Kyiv", age: 10 },
+  { id: generateId(), name: "Igor", city: "Kyiv", age: 20 },
+  { id: generateId(), name: "Alex", city: "Kyiv", age: 50 },
+  { id: generateId(), name: "Oleg", city: "Kyiv", age: 10 },
+  { id: generateId(), name: "Sophia", city: "Kyiv", age: 20 },
+  { id: generateId(), name: "Alex", city: "Kyiv", age: 50 },
+  { id: generateId(), name: "Oleg", city: "Kyiv", age: 10 },
+  { id: generateId(), name: "Alina", city: "Kyiv", age: 20 },
+  { id: generateId(), name: "Alex", city: "Kyiv", age: 50 },
+  { id: generateId(), name: "Oleg", city: "Kyiv", age: 10 },
+  { id: generateId(), name: "Yana", city: "Kyiv", age: 10 },
 ];
+function generateId(length = 10) {
+  let id = "";
+  const symbols = "12537973490ivfnjefiuewjfnjndfvjnelakl";
+
+  for (let i = 0; i < length; i++) {
+    id += symbols[Math.floor(Math.random() * symbols.length)];
+  }
+  return id;
+}
+console.log(generateId());
 
 let changingUser = undefined;
 let paginationPageNumber = 0;
@@ -29,13 +39,16 @@ let paginationPageNumber = 0;
 renderUsers(users);
 renderPagination(users.length);
 
-const deleteUser = (inexOfUsers) => {
-  users = users.filter((el, i) => i !== inexOfUsers);
+const deleteUser = (userId) => {
+  users = users.filter((user) => user.id !== userId);
   renderUsers();
 };
 
-const editUser = (indexOfUser) => {
-  changingUser = { data: users[indexOfUser], index: indexOfUser };
+const editUser = (userId) => {
+  const userToEdit = users.find((user) => user.id === userId);
+  const indexOfEditingUser = users.findIndex((user) => user.id === userId);
+  changingUser = { data: userToEdit, index: indexOfEditingUser };
+
   createButton.textContent = "Save changes";
 
   nameInput.value = changingUser.data.name;
@@ -44,7 +57,8 @@ const editUser = (indexOfUser) => {
 };
 
 function renderPagination(usersQuantity) {
-  const buttonQuantity = !usersQuantity % 3 ? usersQuantity / 3 : (usersQuantity / 3) + 1;
+  const buttonQuantity =
+    !usersQuantity % 3 ? usersQuantity / 3 : usersQuantity / 3 + 1;
 
   for (let i = 0; i < usersQuantity / 3; i++) {
     const button = document.createElement("button");
@@ -122,8 +136,8 @@ function renderUsers(
         <p>${user.name}</p>
         <span>${user.age}</span>
         <p>${user.city}</p>
-        <button class="delete-user-button">Remove</button>
-        <button class="edit-user-button">Edit</button>
+        <button class="delete-user-button" id="${user.id}">Remove</button>
+        <button class="edit-user-button" id="${user.id}">Edit</button>
     </div>`
   );
 
@@ -133,14 +147,14 @@ function renderUsers(
 
   const dleeteButton = [...document.querySelectorAll(".delete-user-button")];
 
-  dleeteButton.forEach((el, i) => {
-    el.onclick = () => deleteUser(i);
+  dleeteButton.forEach((el) => {
+    el.onclick = () => deleteUser(el.id);
   });
 
   const editButtons = [...document.querySelectorAll(".edit-user-button")];
 
-  editButtons.forEach((button, i) => {
-    button.onclick = () => editUser(i);
+  editButtons.forEach((button) => {
+    button.onclick = () => editUser(button.id);
   });
 }
 
@@ -150,16 +164,19 @@ createButton.onclick = () => {
   const city = cityInput.value;
 
   if (changingUser) {
+    // const userToChangeId =
     users[changingUser.index] = {
+        ...users[changingUser.index],
       name: name,
       age: age,
       city: city,
+
     };
 
     changingUser = undefined;
     createButton.textContent = "Create Button";
   } else {
-    const user = { name: name, age: age, city: city };
+    const user = { id: generateId(), name: name, age: age, city: city };
     users.push(user);
   }
 
