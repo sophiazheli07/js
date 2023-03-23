@@ -1,34 +1,34 @@
 // Promise
 
 // GET
-const postsSection = document.querySelector("#posts-section");
+// const postsSection = document.querySelector("#posts-section");
 
-function renderPosts(posts) {
-  postsSection.innerHTML = "";
-  posts.forEach(
-    ({ id, body, title }) =>
-      (postsSection.innerHTML += `<div>
-    <span>${id}</span>
-    <h3>${title}</h3>
-    <p>${body}</p>
-  </div>`)
-  );
-}
+// function renderPosts(posts) {
+//   postsSection.innerHTML = "";
+//   posts.forEach(
+//     ({ id, body, title }) =>
+//       (postsSection.innerHTML += `<div>
+//     <span>${id}</span>
+//     <h3>${title}</h3>
+//     <p>${body}</p>
+//   </div>`)
+//   );
+// }
 
-console.log("1");
+// console.log("1");
 
-fetch("https://jsonplaceholder.typicode.com/posts")
-  .then((response) => response.json())
-  .then((data) => {
-    // data.forEach((post) => console.log(post));
-    renderPosts(data);
-  })
-  .catch((err) => console.log("err", err))
-  .finally(() => {
-    console.log("we've done the request");
-  });
+// fetch("https://jsonplaceholder.typicode.com/posts")
+//   .then((response) => response.json())
+//   .then((data) => {
+//     // data.forEach((post) => console.log(post));
+//     renderPosts(data);
+//   })
+//   .catch((err) => console.log("err", err))
+//   .finally(() => {
+//     console.log("we've done the request");
+//   });
 
-console.log(2);
+// console.log(2);
 
 // const promise = new Promise((resolve, reject) => {
 //     console.log("Hello, it's promise");
