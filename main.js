@@ -137,7 +137,7 @@ submitBtn.onclick = () => {
 
 
 
-  
+// HW 
 logoutBtn.onclick = () => {
     user = undefined;
     localStorage.setItem("user", "");
