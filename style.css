@@ -5,12 +5,30 @@ body{
     background-color: #2d545e;
 
 }
+.typewriter h1 {
+    overflow: hidden; 
+    /* border-right: .12em solid orange;  */
+    white-space: nowrap; 
+    margin: 0 auto;
+    letter-spacing: .15em; 
+    animation: 
+      typing 3s steps(40, end),
+      blink-caret .75s step-end infinite;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 50% }
+  }
+  
 
 input ,button{
     font-size: 23px;
     margin: 10px;
     border-radius: 15px;
-    border: 1px solid #e1b382;
+    border: 2px solid #e1b382;
     background: none;
     color: white;
     font-family: 'Ubuntu', sans-serif;
@@ -57,10 +75,7 @@ h1{
     margin-right: 8px;
     margin-left: 8px;
 }
-/* 
-input{
-    outline: none;
-} */
+
 
 label{
     color: #e1b382;
