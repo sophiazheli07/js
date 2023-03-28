@@ -22,6 +22,7 @@ let users = [
   { id: generateId(), name: "Oleg", city: "Kyiv", age: 10 },
   { id: generateId(), name: "Yana", city: "Kyiv", age: 10 },
 ];
+
 function generateId(length = 10) {
   let id = "";
   const symbols = "12537973490ivfnjefiuewjfnjndfvjnelakl";
@@ -31,6 +32,7 @@ function generateId(length = 10) {
   }
   return id;
 }
+
 console.log(generateId());
 
 let changingUser = undefined;
@@ -57,8 +59,7 @@ const editUser = (userId) => {
 };
 
 function renderPagination(usersQuantity) {
-  const buttonQuantity =
-    !usersQuantity % 3 ? usersQuantity / 3 : usersQuantity / 3 + 1;
+  pagination.innerHTML = "";
 
   for (let i = 0; i < usersQuantity / 3; i++) {
     const button = document.createElement("button");
@@ -71,7 +72,7 @@ function renderPagination(usersQuantity) {
     pagination.appendChild(button);
   }
   // render first 3 users permanently
-  renderUsers(groupElementsOfArray(users, 3)[0]);
+  // renderUsers(groupElementsOfArray(users, 3)[0]);
 }
 
 const sorting = {
@@ -108,9 +109,8 @@ function groupElementsOfArray(arr, oneSetQuantity = 3) {
   return result.filter((arr) => arr.length > 0);
 }
 
-function renderUsers(
-  usersToRender = groupElementsOfArray(users, 3)[paginationPageNumber]
-) {
+function renderUsers(usersToRender = groupElementsOfArray(users, 3)[paginationPageNumber]) {
+  renderPagination(users.length);
   usersSection.innerHTML = "";
 
   // HW Написати функцію (логіку, що розбиває масив з користувачами на підмасиви по 3 користувачі у кожному)
@@ -166,11 +166,10 @@ createButton.onclick = () => {
   if (changingUser) {
     // const userToChangeId =
     users[changingUser.index] = {
-        ...users[changingUser.index],
+      ...users[changingUser.index],
       name: name,
       age: age,
       city: city,
-
     };
 
     changingUser = undefined;
