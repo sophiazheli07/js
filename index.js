@@ -34,90 +34,164 @@
 const input = document.querySelector("#todo-creation");
 const button = document.querySelector("#create-todo-button");
 const output = document.querySelector("#output");
+const usersOutput = document.querySelector("#users-output");
 
+// const localSt = localStorage.getItem("todos");
+// let todos = localSt ? JSON.parse(localSt) : [
 let todos = [
-    {
-        text: "buy Dodge Challeger",
-        done: false
-    }
+  {
+    text: "buy Dodge Challeger",
+    done: false,
+  },
 ];
 
+let users = [];
 renderTodos(todos);
 
-function generateUniqueKey() {
-  const existingKeys = Object.keys(localStorage);
-  let key = `todos-${existingKeys.length + 1}`;
-  while (existingKeys.includes(key)) {
-    key = `todos-${existingKeys.length + 1}`;
-  }
-  return key;
-}
-const key =  generateUniqueKey();
-console.log(key)
+
+// function generateUniqueKey() {
+//   const existingKeys = Object.keys(localStorage);
+//   let key = `todos-${existingKeys.length + 1}`;
+//   while (existingKeys.includes(key)) {
+//     key = `todos-${existingKeys.length + 1}`;
+//   }
+//   return key;
+// }
+// const key =  generateUniqueKey();
+// console.log(key)
 
 button.onclick = () => {
-    const todo = {
-        text: input.value,
-        done: false
-    }
+  const todo = {
+    text: input.value,
+    done: false,
+  };
 
-    input.value = "";
-    
-    todos.push(todo);
-    localStorage.setItem(key, JSON.stringify(todo));
+  input.value = "";
 
-    renderTodos(todos);
-}
+  todos.push(todo);
 
-function renderTodos (todosToRender) {
-    output.innerHTML = "";
-    
-    todosToRender.forEach((todo, i) => {
-        output.innerHTML += `
+  renderTodos(todos);
+};
+
+function renderTodos(todosToRender) {
+  output.innerHTML = "";
+
+  // HW -----------
+  localStorage.setItem("todos", JSON.stringify(todos));
+  todosToRender.forEach((todo, i) => {
+    output.innerHTML += `
             <li class="todo ${todo.done && "done"}">
                 <div>
-                <span>${i + 1}.</span>
-                <input type="checkbox" ${todo.done && "checked"} class="todo-checkbox" />
-                <span>${todo.text}</span>
+                    <span>${i + 1}.</span>
+                    <input type="checkbox" ${
+                    todo.done && "checked"
+                    } class="todo-checkbox" />
+                    <span>${todo.text}</span>
                 </div>
                 <button class="delete-todo">Delete</button>
             </li>
-        `
-    });
+        `;
+  });
 
-    const checkboxes = [...document.querySelectorAll(".todo-checkbox")];
+  const checkboxes = [...document.querySelectorAll(".todo-checkbox")];
 
-    checkboxes.forEach((checkbox, i) => {
-        checkbox.onchange = () => {
-            const todo = todos[i];
-            changeTodo(todo.text, !todo.done);
-        }
-    });
+  checkboxes.forEach((checkbox, i) => {
+    checkbox.onchange = () => {
+      const todo = todos[i];
+      changeTodo(todo.text, !todo.done);
+    };
+  });
 
-    const deleteButtons = [...document.querySelectorAll(".delete-todo")];
+  const deleteButtons = [...document.querySelectorAll(".delete-todo")];
 
-    deleteButtons.forEach((button, i) => {
-        button.onclick = () => {
-            const todo = todos[i];
-            deleteTodo(todo.text);
-            localStorage.setItem(key, "");
-        }
-        
-    });
+  deleteButtons.forEach((button, i) => {
+    button.onclick = () => {
+      const todo = todos[i];
+      deleteTodo(todo.text);
+    };
+  });
 }
 
-function changeTodo (text, newDone) {
-    todos = todos.map((todo) => {
-        if (text === todo.text) {
-            return { text, done: newDone }
-        }
-        return todo;
-    });
+function changeTodo(text, newDone) {
+  todos = todos.map((todo) => {
+    if (text === todo.text) {
+      return { text, done: newDone };
+    }
+    return todo;
+  });
 
-    renderTodos(todos);
+  renderTodos(todos);
 }
 
-function deleteTodo (text) {
+function deleteTodo(text) {
   todos = todos.filter((todo) => todo.text !== text);
   renderTodos(todos);
 }
+// const keys = {
+//   title: "text",
+//   completed: "done",
+// };
+
+// function getServerTodos() {
+//   fetch("https://jsonplaceholder.typicode.com/todos")
+//     .then((response) => response.json())
+//     .then((json) => {
+//       json.map((item) => {
+//         let newItem = {};
+//         Object.keys(item).forEach((key) => {
+//           newItem[keys[key]] = item[key];
+//           console.log(newItem);
+//         });
+//         return newItem;
+//       });
+//       console.log(json);
+//     });
+// }
+// console.log(getServerTodos());
+function getServerTodos() {
+  fetch("https://jsonplaceholder.typicode.com/todos")
+    .then((response) => response.json())
+    .then(todosFromServer=> {
+        const transformedTodos = todosFromServer.slice(0,20).map((todo) => {
+           return {
+                text: todo.title,
+                done: todo.completed,
+                userId: todo.userId,
+                id: todo.id,
+                ...todo
+            };
+        })
+        console.log(transformedTodos);
+
+        todos = transformedTodos;
+        renderTodos(todos);
+    });
+    
+}
+
+getServerTodos();
+
+function getServerUsers () {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(usersFromServer => {
+        console.log(usersFromServer);
+
+        users = usersFromServer;
+        renderUsers();
+    })
+}
+
+getServerUsers();
+
+function renderUsers () {
+    usersOutput.innerHTML = "";
+
+    users.forEach((user) => {
+        usersOutput.innerHTML += `
+        <button class="user-todos-button">${user.name}</button>
+        `
+    });
+}
+
+//remember it's async js!!!

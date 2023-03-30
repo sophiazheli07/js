@@ -11,6 +11,9 @@ body {
   border-radius: 30px;
   margin-top: 10px;
   transition: 0.3s all;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
 }
 .done {
   opacity: 0.5;
@@ -55,12 +58,12 @@ li {
   width: auto;
 }
 button {
-  height: 25px;
+  min-height: 25px;
   margin: 1px;
   background: white;
   border-radius: 10px;
   border: none;
-  width: 100px;
+  min-width: 100px;
   font-size: 18px;
 }
 span {
@@ -85,4 +88,16 @@ ul::-webkit-scrollbar-track {
   border-left: 9px solid white;
   border-right: 9px solid white;
   border-radius: 10px 0px 0px 10px;
+}
+section{
+  justify-content: center;
+}
+#users-output{
+  position: relative;
+  bottom: 250px;
+
+
+}
+.user-todos-button{
+  margin: 10px;
 }
