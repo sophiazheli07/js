@@ -29,79 +29,95 @@
 // getCookie("city");
 // document.cookie = "=null";
 
-// TO DO LIST 
+// TO DO LIST
 
 const input = document.querySelector("#todo-creation");
 const button = document.querySelector("#create-todo-button");
 const output = document.querySelector("#output");
 
 let todos = [
-{
-    text: "buy Dodge Challenger",
-    done: false
-}
-
+    {
+        text: "buy Dodge Challeger",
+        done: false
+    }
 ];
-renderTodos(todos)
+
+renderTodos(todos);
+
+function generateUniqueKey() {
+  const existingKeys = Object.keys(localStorage);
+  let key = `todos-${existingKeys.length + 1}`;
+  while (existingKeys.includes(key)) {
+    key = `todos-${existingKeys.length + 1}`;
+  }
+  return key;
+}
+const key =  generateUniqueKey();
+console.log(key)
 
 button.onclick = () => {
     const todo = {
         text: input.value,
         done: false
-
     }
 
     input.value = "";
-
+    
     todos.push(todo);
+    localStorage.setItem(key, JSON.stringify(todo));
 
     renderTodos(todos);
 }
 
 function renderTodos (todosToRender) {
     output.innerHTML = "";
-    todosToRender.forEach(({text, done}, i) => {
+    
+    todosToRender.forEach((todo, i) => {
         output.innerHTML += `
-        <div class="todo ${done && "done"}">
-        <span>${i+1}.</span>
-        <input type="checkbox" ${done && "checked"} class="todo-checkbox"/>
-        <span>${text}</span>
-        <button class="delete-todo">Delete</button>
-
-        </div>
+            <li class="todo ${todo.done && "done"}">
+                <div>
+                <span>${i + 1}.</span>
+                <input type="checkbox" ${todo.done && "checked"} class="todo-checkbox" />
+                <span>${todo.text}</span>
+                </div>
+                <button class="delete-todo">Delete</button>
+            </li>
         `
     });
 
     const checkboxes = [...document.querySelectorAll(".todo-checkbox")];
-    const deleteButtons = [...document.querySelectorAll(".delete-todo")];
-    deleteButtons.forEach((button, i) => {
-        button.onclick = () => {
-            const todo = todos[i];
-            
-
-        }
-    })
 
     checkboxes.forEach((checkbox, i) => {
         checkbox.onchange = () => {
             const todo = todos[i];
             changeTodo(todo.text, !todo.done);
         }
+    });
 
-    })
+    const deleteButtons = [...document.querySelectorAll(".delete-todo")];
+
+    deleteButtons.forEach((button, i) => {
+        button.onclick = () => {
+            const todo = todos[i];
+            deleteTodo(todo.text);
+            localStorage.setItem(key, "");
+        }
+        
+    });
 }
 
 function changeTodo (text, newDone) {
     todos = todos.map((todo) => {
         if (text === todo.text) {
-            todo = {text, done: newDone}
+            return { text, done: newDone }
         }
         return todo;
     });
-    renderTodos(todos)
+
+    renderTodos(todos);
 }
 
-function deleteTodo () {
-    return todos.filter((todo) => todo.text !== text);
-    renderTodos(todos);
+function deleteTodo (text) {
+  todos = todos.filter((todo) => todo.text !== text);
+  renderTodos(todos);
 }
