@@ -35,6 +35,8 @@ const input = document.querySelector("#todo-creation");
 const button = document.querySelector("#create-todo-button");
 const output = document.querySelector("#output");
 const usersOutput = document.querySelector("#users-output");
+const clearCurrentUser = document.querySelector("#clear-current-user");
+const searxhTodoInput = document.querySelector("#todo-search");
 
 // const localSt = localStorage.getItem("todos");
 // let todos = localSt ? JSON.parse(localSt) : [
@@ -46,8 +48,8 @@ let todos = [
 ];
 
 let users = [];
+let currentUser = undefined;
 renderTodos(todos);
-
 
 // function generateUniqueKey() {
 //   const existingKeys = Object.keys(localStorage);
@@ -84,7 +86,7 @@ function renderTodos(todosToRender) {
                 <div>
                     <span>${i + 1}.</span>
                     <input type="checkbox" ${
-                    todo.done && "checked"
+                      todo.done && "checked"
                     } class="todo-checkbox" />
                     <span>${todo.text}</span>
                 </div>
@@ -120,12 +122,25 @@ function changeTodo(text, newDone) {
     return todo;
   });
 
-  renderTodos(todos);
+  renderTodos(
+    currentUser ? todos.filter((todo) => todo.userId === currentUser.id) : todos
+  );
 }
 
 function deleteTodo(text) {
   todos = todos.filter((todo) => todo.text !== text);
-  renderTodos(todos);
+  renderTodos(
+    currentUser ? todos.filter((todo) => todo.userId === currentUser.id) : todos
+  );
+}
+
+function searchTodo(value) {
+  const filteredTodos = currentUser
+    ? todos.filter(
+        (todo) => todo.text.includes(value) && todo.userId === currentUser.id
+      )
+    : todos.filter((todo) => todo.text.includes(value));
+  renderTodos(filteredTodos);
 }
 // const keys = {
 //   title: "text",
@@ -151,47 +166,75 @@ function deleteTodo(text) {
 function getServerTodos() {
   fetch("https://jsonplaceholder.typicode.com/todos")
     .then((response) => response.json())
-    .then(todosFromServer=> {
-        const transformedTodos = todosFromServer.slice(0,20).map((todo) => {
-           return {
-                text: todo.title,
-                done: todo.completed,
-                userId: todo.userId,
-                id: todo.id,
-                ...todo
-            };
-        })
-        console.log(transformedTodos);
+    .then((todosFromServer) => {
+      const transformedTodos = todosFromServer.map((todo) => {
+        return {
+          text: todo.title,
+          done: todo.completed,
+          userId: todo.userId,
+          id: todo.id,
+          ...todo,
+        };
+      });
+      console.log(transformedTodos);
 
-        todos = transformedTodos;
-        renderTodos(todos);
+      todos = transformedTodos;
+      renderTodos(todos);
     });
-    
 }
 
 getServerTodos();
 
-function getServerUsers () {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => response.json())
-      .then(usersFromServer => {
-        console.log(usersFromServer);
+function getServerUsers() {
+  fetch("https://jsonplaceholder.typicode.com/users")
+    .then((response) => response.json())
+    .then((usersFromServer) => {
+      console.log(usersFromServer);
 
-        users = usersFromServer;
-        renderUsers();
-    })
+      users = usersFromServer;
+      renderUsers();
+    });
 }
 
 getServerUsers();
 
-function renderUsers () {
-    usersOutput.innerHTML = "";
+function renderUsers() {
+  usersOutput.innerHTML = "";
 
-    users.forEach((user) => {
-        usersOutput.innerHTML += `
+  users.forEach((user) => {
+    usersOutput.innerHTML += `
         <button class="user-todos-button">${user.name}</button>
-        `
-    });
+        `;
+  });
+  const userButtons = [...document.querySelectorAll(".user-todos-button")];
+  userButtons.forEach((button, i) => {
+    button.onclick = (event) => {
+      searxhTodoInput.value = "";
+      currentUser = users[i];
+      clearCurrentUser.disabled = false;
+      console.log(currentUser);
+
+      userButtons.forEach((btn) => btn.classList.remove("active-user-button"));
+      event.target.classList.add("active-user-button");
+
+      const todosOfCurrentUser = todos.filter(
+        (todo) => todo.userId === currentUser.id
+      );
+      renderTodos(todosOfCurrentUser);
+    };
+  });
 }
+
+clearCurrentUser.disabled = true;
+
+clearCurrentUser.onclick = () => {
+  currentUser = undefined;
+  clearCurrentUser.disabled = true;
+  renderTodos(todos);
+};
+searxhTodoInput.oninput = () => {
+  console.log(searxhTodoInput.value);
+  searchTodo(searxhTodoInput.value);
+};
 
 //remember it's async js!!!
