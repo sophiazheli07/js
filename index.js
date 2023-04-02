@@ -37,6 +37,8 @@ const output = document.querySelector("#output");
 const usersOutput = document.querySelector("#users-output");
 const clearCurrentUser = document.querySelector("#clear-current-user");
 const searxhTodoInput = document.querySelector("#todo-search");
+const clearTodoSearch = document.querySelector("#clear-todo-search");
+const scrollUpBtn = document.querySelector("#scroll-to-btn");
 
 // const localSt = localStorage.getItem("todos");
 // let todos = localSt ? JSON.parse(localSt) : [
@@ -237,4 +239,15 @@ searxhTodoInput.oninput = () => {
   searchTodo(searxhTodoInput.value);
 };
 
+// HW Кнопку очищення input для пошуку (кнопка має очистити value інпуту) April 13, 2023
+
+clearTodoSearch.onclick = () => {
+    searxhTodoInput.value = ""
+}
+// Кнопку, що прогортує весь контент до гори (для великої кількості todo) 
+
+window.scrollTo();
+scrollUpBtn.onclick = () => {
+    window.scrollTo(0, 0);
+}
 //remember it's async js!!!

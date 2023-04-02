@@ -35,6 +35,9 @@ ul {
   text-align: center;
   box-shadow: 10px 10px 10px #c55e6d;
 }
+header{
+height: fit-content;
+}
 
 header input {
   width: 230px;
@@ -95,9 +98,12 @@ section{
 #users-output{
   position: relative;
   top: -250px;
+  display: flex;
+  flex-direction: column;
 
 
 }
+
 .user-todos-button{
   margin: 10px;
 }
@@ -109,6 +115,10 @@ section{
   background: #c55e6d;
 }
 #todo-search{
-  width: 80%;
+
   margin-top: 10px;
+}
+#scroll-to-btn{
+  position: relative;
+  top: -200px;
 }
