@@ -36,7 +36,7 @@ ul {
   box-shadow: 10px 10px 10px #c55e6d;
 }
 header{
-height: fit-content;
+min-height: 800px;
 }
 
 header input {

@@ -87,12 +87,12 @@ function renderTodos(todosToRender) {
             <li class="todo ${todo.done && "done"}">
                 <div>
                     <span>${i + 1}.</span>
-                    <input type="checkbox" ${
+                    <input id="${todo.id}" type="checkbox" ${
                       todo.done && "checked"
                     } class="todo-checkbox" />
                     <span>${todo.text}</span>
                 </div>
-                <button class="delete-todo">Delete</button>
+                <button id="${todo.id}" class="delete-todo">Delete</button>
             </li>
         `;
   });
@@ -101,8 +101,8 @@ function renderTodos(todosToRender) {
 
   checkboxes.forEach((checkbox, i) => {
     checkbox.onchange = () => {
-      const todo = todos[i];
-      changeTodo(todo.text, !todo.done);
+      const todo =  todos.find((todo) => todo.id === +checkbox.id);
+      changeTodo(todo.id, !todo.done);
     };
   });
 
@@ -110,16 +110,16 @@ function renderTodos(todosToRender) {
 
   deleteButtons.forEach((button, i) => {
     button.onclick = () => {
-      const todo = todos[i];
+      const todo =  todos.find((todo) => todo.id === +button.id);
       deleteTodo(todo.text);
     };
   });
 }
 
-function changeTodo(text, newDone) {
+function changeTodo(id, newDone) {
   todos = todos.map((todo) => {
-    if (text === todo.text) {
-      return { text, done: newDone };
+    if (todo.id === id) {
+      return { ...todo, done: newDone };
     }
     return todo;
   });
@@ -131,6 +131,7 @@ function changeTodo(text, newDone) {
 
 function deleteTodo(text) {
   todos = todos.filter((todo) => todo.text !== text);
+  console.log(todos)
   renderTodos(
     currentUser ? todos.filter((todo) => todo.userId === currentUser.id) : todos
   );
@@ -232,6 +233,8 @@ clearCurrentUser.disabled = true;
 clearCurrentUser.onclick = () => {
   currentUser = undefined;
   clearCurrentUser.disabled = true;
+  const userButtons = [...document.querySelectorAll(".user-todos-button")];
+  userButtons.forEach((btn) => btn.classList.remove("active-user-button"));
   renderTodos(todos);
 };
 searxhTodoInput.oninput = () => {
@@ -242,16 +245,21 @@ searxhTodoInput.oninput = () => {
 // HW Кнопку очищення input для пошуку (кнопка має очистити value інпуту) April 13, 2023
 
 clearTodoSearch.onclick = () => {
-    searxhTodoInput.value = "";
-    renderTodos(todos)
-}
-// Кнопку, що прогортує весь контент до гори (для великої кількості todo) 
+  searxhTodoInput.value = "";
+  const todosToRender = currentUser ? todos.filter((todo) =>  todo.userId === currentUser.id) : todos;
+  renderTodos(todosToRender);
+};
+// Кнопку, що прогортує весь контент до гори (для великої кількості todo)
 
-window.scrollTo();
+
 scrollUpBtn.onclick = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-}
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
 //remember it's async js!!!
+
+
+// вибачте, є запитання трохи не по темі,
+// чому на більшості вакансій та стажувань одним з основних вимог також є РНР і чи є сенс братися за вивчення зараз?
