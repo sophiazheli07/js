@@ -242,12 +242,16 @@ searxhTodoInput.oninput = () => {
 // HW Кнопку очищення input для пошуку (кнопка має очистити value інпуту) April 13, 2023
 
 clearTodoSearch.onclick = () => {
-    searxhTodoInput.value = ""
+    searxhTodoInput.value = "";
+    renderTodos(todos)
 }
 // Кнопку, що прогортує весь контент до гори (для великої кількості todo) 
 
 window.scrollTo();
 scrollUpBtn.onclick = () => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
 }
 //remember it's async js!!!
