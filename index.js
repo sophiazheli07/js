@@ -51,18 +51,82 @@
 // }
 // main5();
 
-
-// HW перепишіть запит на нотацію async / await 
+// HW перепишіть запит на нотацію async / await
 // Дано:
 // fetch('https://jsonplaceholder.typicode.com/todos/1')
 //       .then(response => response.json())
 //       .then(json => console.log(json))
 
 async function fetchTodo() {
-  const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+  const response = await fetch("https://jsonplaceholder.typicode.com/todos/1");
   const json = await response.json();
   console.log(json);
-  return json
+  return json;
 }
 
 fetchTodo();
+
+const createPost = (post) => {
+  fetch("https://jsonplaceholder.typicode.com/posts", {
+    method: "POST",
+    body: JSON.stringify(post),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      return data;
+    })
+    .catch((err) => console.log(err));
+};
+
+// createPost({ title: "title", body: "text", userId: 0 }).then((data) =>
+//   console.log("hello", data)
+// );
+
+// Requests -> response
+
+// 1. GET          server --> client
+// 2. POST         client --> server - створення нових сутностей
+// 3. PATCH/PUT    client --> server - оновлення існуючих стуностей
+// 4. DELETE       client --> server - видаленя сутності
+
+//                        APP
+//                    /        \
+//                   /          \
+//                  /            \
+//                    [data flow]
+//   Frontend(visual) <--------> Backend(logic, data manipulation)
+//                       fetch           DataBase(DB)
+
+//      ∧,,,∧
+//    (  ̳• · • ̳)
+//    /    づ♡
+
+const createPosts = async (post) => {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      body: JSON.stringify(post),
+    });
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const updatePost = (post) => {
+  fetch("https://jsonplaceholder.typicode.com/posts/7", {
+    method: "PATCH",
+    body: JSON.stringify(post),
+  })
+  .then((response) => response.json())
+  .then((data) => console.log("DATA after PUT", data))
+};
+
+createPosts({ title: "title", body: "text", userId: 0 }).then((data) =>
+  console.log("hello", data)
+);
+
+updatePost({title: "title", body: "text", userId: 0})
