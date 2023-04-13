@@ -21,9 +21,10 @@ class Service {
     const payload = await response.json();
     return payload;
   }
-  async patchRequest(id, data) {
+  async patchRequest(id, data, method = "PATCH") {
     const response = await fetch(`${this.url}/${id}`, {
-      method: "PATCH",
+      headers: Service.headers,
+      method,
       body: JSON.stringify(data),
     });
     const payload = await response.json();
@@ -69,6 +70,14 @@ class UserRealService extends Service {
     super(url);
   }
 }
+ class TodosService extends Service {
+  constructor (url){
+    super(url)
+  }
+ }
+
+ const todosServ = new TodosService("https://learning-server.onrender.com/users")
+ todosServ.getRequest().then((data) => console.log(data, "TODOS DATA"))
 
 const realUserService = new UserRealService(
   "https://learning-server.onrender.com/users"
