@@ -70,14 +70,16 @@ class UserRealService extends Service {
     super(url);
   }
 }
- class TodosService extends Service {
-  constructor (url){
-    super(url)
+class TodosService extends Service {
+  constructor(url) {
+    super(url);
   }
- }
+}
 
- const todosServ = new TodosService("https://learning-server.onrender.com/users")
- todosServ.getRequest().then((data) => console.log(data, "TODOS DATA"))
+const todosServ = new TodosService(
+  "https://learning-server.onrender.com/users"
+);
+todosServ.getRequest().then((data) => console.log(data, "TODOS DATA"));
 
 const realUserService = new UserRealService(
   "https://learning-server.onrender.com/users"
@@ -102,8 +104,8 @@ realUserService.getRequest().then((data) => {
     // const usersWithSameName = aerray.filter((u) => u.name === user.name);
     const isUserAdded = res.find((u) => u.name === user.name);
     !isUserAdded && res.push(user);
-  })
-  console.log(res, "wtf is going on")
+  });
+  console.log(res, "wtf is going on");
 });
 // realUserService
 //   .patchRequest("6435961868dc217913867831", {
@@ -135,3 +137,21 @@ realUserService.getRequest().then((data) => {
   console.log("Unique users by name:", uniqueUserList);
 });
 
+class ProjectService extends Service {
+  constructor(url) {
+    super(url);
+  }
+}
+
+//HW
+
+const projectService = new PostService(
+  "https://learning-server.onrender.com/projects "
+);
+
+projectService.getRequest().then((data) => console.log("data!!!!!", data));
+projectService.postRequest({
+  name: "Proj",
+  duration: 100,
+  users: ["257837587356375"],
+}).then((data) => console.log("data!!!!![post]", data));

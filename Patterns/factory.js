@@ -150,7 +150,7 @@ class Factory2 {
   static chechA = (text) => {
     const arrayOfText = text.split("");
     return arrayOfText.every((el) => el === el.toUppercase());
-  }
+  };
   static chechB = (text) => text.length <= 5;
 
   static chechC = (text) => typeof text === "number";
@@ -164,12 +164,34 @@ class Factory2 {
     ](data);
   }
 
-//   constructor(data) {
-//     return new Factory2.cases[
-//       (data.text === text.toUppercase() && A.name) ||
-//         (data.text.length <= 5 && B.name) ||
-//         (typeof data.C === "number" && C.name) ||
-//         C.name
-//     ](data);
-//   }
+  //   constructor(data) {
+  //     return new Factory2.cases[
+  //       (data.text === text.toUppercase() && A.name) ||
+  //         (data.text.length <= 5 && B.name) ||
+  //         (typeof data.C === "number" && C.name) ||
+  //         C.name
+  //     ](data);
+  //   }
 }
+
+// HW
+
+class Factory3 {
+  static cases = {
+    A,
+    B,
+  };
+  static check = {
+    A: (data) => (data.a ? true : false),
+    B: (data) => Object.values(data).every((el) => typeof el === "string"),
+  };
+  constructor(data) {
+    return new Factory3.cases[
+      (Factory3.check.A(data) && A.name) || (Factory3.check.B(data) && B.name)
+    ](data);
+  }
+}
+const a1 = new Factory3({a: 10});
+const b1 = new Factory3({b: "1010101", msg: "jsdwe"});
+
+console.log(a1, b1, "RESSS")
