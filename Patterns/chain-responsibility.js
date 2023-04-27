@@ -110,3 +110,5 @@ const result2 = customElement
 console.log(result2);
 
 const customElement2 = new CustomElement("table")
+
+
