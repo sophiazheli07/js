@@ -29,7 +29,10 @@ window.onload = () => {
     })
 
     $("h1").text("XXXXXX").fadeOut(1000).fadeIn(1000);
+
     
 
 };
 
+window.onload = () => {};
+window.addEventListener("load", () => {}); // [events]
