@@ -31,4 +31,16 @@ $('#inp-1, #inp-2').on('input', function() {
    $("#sub-btn").on("click", function() {
     $('#inp-1, #inp-2').val("");
  });
+ 
+ //HW fadeIn, fadeOut
+
+  $("body").click(function(){
+    $("*").each(function(){ 
+      if ($(this).is(":visible")) { 
+        $(this).fadeOut(1000); 
+        $(this).fadeIn(1000); 
+      } 
+    });
+  });
 });
+ 
