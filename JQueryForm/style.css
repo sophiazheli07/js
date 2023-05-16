@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: rgb(123, 69, 183);
+  background: linear-gradient(
+    90deg,
+    rgba(123, 69, 183, 1) 0%,
+    rgba(56, 177, 214, 1) 100%
+  );
+  
+}
+
+form {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-height: 900px;
+  max-width: 350px;
+  padding: 80px;
+}
