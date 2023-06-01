@@ -28,10 +28,11 @@ div {
     justify-content: center;
     align-items: center;
     min-width: 500px;
-    min-height: 300px;
-    background: #6e99a7;
-    border-radius: 45px;
+    max-height: 450px;
+    border: 1px solid white;
+    border-radius: 35px;
     margin-top: 50px;
+    padding: 20px;
 }
 .film-elem img{
     height: 300px;
@@ -47,4 +48,15 @@ header {
 header > button {
     font-size: 20px;
     
+}
+.search-form-btn{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+
+}
+.search-form-btn > button {
+    margin: 10px;
 }

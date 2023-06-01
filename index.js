@@ -1,5 +1,3 @@
-
-
 class App {
   static API_KEY = "417a5eb3d1mshed972e378934e9ap106f51jsn2f50fcd2d0fc";
   static SEARCH_URL =
@@ -18,17 +16,45 @@ class App {
   static watchListOutput = document.querySelector("#watchList");
   static watchListRandomButton = document.querySelector("#random-film-button");
 
+  static SECTIONS = {
+    main: "main",
+    filmList: "filmList",
+  };
+
   constructor(data = [], watchList = []) {
     this.data = data;
     this.watchList = watchList;
+    this.currentSection = App.SECTIONS.main;
 
     App.searchButton.onclick = () => this.onButtonClick();
-    App.watchListSwitcher.onclick = () => this.renderWatchlist();
+    App.watchListSwitcher.onclick = () =>
+      this.currentSection === App.SECTIONS.main
+        ? this.renderWatchlist()
+        : this.renderMainView();
+
     App.watchListRandomButton.onclick = () =>
       console.log(this.getRandomFilm(), "!!!!");
+
+    App.input.oninput = (e) => this.onInputChange(e);
   }
 
-  onInputChange() {}
+  onInputChange(e) {
+    // if (this.currentSection === App.SECTIONS.PfilmList) {
+    //   const inputValue = e.target.value;
+    //   const filteredData = this.data.filter(film => film.l.toLowerCase().includes(inputValue.toLowerCase()));
+    //   this.renderData(filteredData, App.output);
+    // }
+    if (this.currentSection === App.SECTIONS.filmList) {
+      console.log(e.target.value);
+
+      const films = this.getWatchListData();
+
+      const filteredFilms = films.filter(({l})) => l.toLowerCase().includes(e.target.value.toLowerCase())
+
+      this.renderData(filteredf)
+      
+    }
+  }
 
   //start search
   onButtonClick() {
@@ -110,7 +136,7 @@ class App {
 
       const isFilmAddedToWatchList = this.checkIfWathclistContainsFilm(id);
 
-      outputElement.innerHTML += `<div class="film-elem">
+      outputElement.innerHTML += `<div class="film-elem ${}">
         <img src="${imageUrl}" />
         <h3>${title}</h3>
         <span>Rating: ${rank}</span>
@@ -143,12 +169,26 @@ class App {
   }
 
   renderWatchlist() {
-    App.output.style.visibility = "hidden";
-    App.watchListOutput.style.visibility = "visible";
+    App.output.style.display = "none";
+    App.watchListOutput.style.display = "flex";
+    App.searchButton.style.display = "none";
+
+    App.watchListSwitcher.textContent = "Go to main page";
+
+    this.currentSection = App.SECTIONS.filmList;
 
     const watchListData = this.getWatchListData();
 
     this.renderData(watchListData, App.watchListOutput, true);
+  }
+  renderMainView() {
+    App.output.style.display = "flex";
+    App.watchListOutput.style.display = "none";
+    App.searchButton.style.display = "inline-block";
+
+    App.watchListSwitcher.textContent = "Go to watch list";
+
+    this.currentSection = App.SECTIONS.main;
   }
 }
 
