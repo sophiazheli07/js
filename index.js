@@ -1,5 +1,7 @@
+
+
 class App {
-  static API_KEY = "bb71f6d0a5msh8bea47b10b6fd85p1e95cbjsnac5a7c3dc7df";
+  static API_KEY = "417a5eb3d1mshed972e378934e9ap106f51jsn2f50fcd2d0fc";
   static SEARCH_URL =
     "https://online-movie-database.p.rapidapi.com/auto-complete?q=";
 
@@ -8,16 +10,22 @@ class App {
     "X-RapidAPI-Host": "online-movie-database.p.rapidapi.com",
   };
 
-  static button = document.querySelector("button");
+  static searchButton = document.querySelector("#search-button");
   static input = document.querySelector("input");
   static output = document.querySelector("section");
-  static watchListOutput = document.querySelector("#watch-list");
+
+  static watchListSwitcher = document.querySelector("#watch-list-switcher");
+  static watchListOutput = document.querySelector("#watchList");
+  static watchListRandomButton = document.querySelector("#random-film-button");
 
   constructor(data = [], watchList = []) {
     this.data = data;
     this.watchList = watchList;
 
-    App.button.onclick = () => this.onButtonClick();
+    App.searchButton.onclick = () => this.onButtonClick();
+    App.watchListSwitcher.onclick = () => this.renderWatchlist();
+    App.watchListRandomButton.onclick = () =>
+      console.log(this.getRandomFilm(), "!!!!");
   }
 
   onInputChange() {}
@@ -46,13 +54,40 @@ class App {
       alert("Query is invalid");
     }
   }
-  addWachListData(film) {
-    const oldWatchList = JSON.parse(localStorage("watchList") || "[]");
-    localStorage.setItem("watchList", [...oldWatchList, film]);
 
+  getRandomFilm() {
+    const watchList = this.getWatchListData();
+    return watchList[Math.floor(Math.random() * watchList.length)];
   }
 
-  renderData(dataToRender, outputElement = App.output) {
+  getWatchListData() {
+    return JSON.parse(localStorage.getItem("watchList") || "[]");
+  }
+
+  addWatchlistData(film) {
+    const oldWatchList = this.getWatchListData();
+    localStorage.setItem("watchList", JSON.stringify([...oldWatchList, film]));
+  }
+
+  removeWatchListData(id) {
+    const oldWatchList = this.getWatchListData();
+    localStorage.setItem(
+      "watchList",
+      JSON.stringify([...oldWatchList].filter((film) => film.id !== id))
+    );
+  }
+
+  checkIfWathclistContainsFilm(id) {
+    return this.getWatchListData().find((film) => film.id === id)
+      ? true
+      : false;
+  }
+
+  renderData(
+    dataToRender,
+    outputElement = App.output,
+    isUsingAsWatchList = false
+  ) {
     outputElement.innerHTML = "";
 
     dataToRender.forEach((film) => {
@@ -73,67 +108,48 @@ class App {
         height: 1000,
       };
 
-      outputElement.innerHTML += `
-        <div class="film-elem">
+      const isFilmAddedToWatchList = this.checkIfWathclistContainsFilm(id);
+
+      outputElement.innerHTML += `<div class="film-elem">
         <img src="${imageUrl}" />
         <h3>${title}</h3>
         <span>Rating: ${rank}</span>
         <span>Actors: ${actors}</span>
         <span>Year: ${year || "unknown"}</span>
-        <button class = "film">Watch Later</button>
-        
-      </div>
-      
-      `;
-    
-      
-      const filmButtons = document.querySelectorAll(".film");
-      [...filmButtons].forEach((btn, i) => {
-        btn.onclick = () => {
-          console.log("!!!!");
-          this.addWachListData(dataToRender[i]);
-        }
-        removeWatchListData(id) {
-
-          const oldWatchList = JSON.parse(this.getWatchListData());
-          
-          localStorage.setItem("watchList", JSON.stringify([...oldWatchList].filter((el) => el.id !== id)));
-          
-        };
-
-      })
-
-
-
+        <button class="film-button">${
+          isFilmAddedToWatchList ? "DeleteFromWatchList" : "AddToWatchLater"
+        }</button>
+      </div>`;
     });
 
-  
-}
-checkIfWatchListContainsFilm() {
-  return this.getWatchListData().find((film) => film.id === id) ? true : false
-}
+    const filmsButtons = document.querySelectorAll(".film-button");
+    [...filmsButtons].forEach((btn, i) => {
+      btn.onclick = () => {
+        const currentFilm = dataToRender[i];
 
-renderWatchList() {
-App.output.style.visibility = "hidden";
-App.watchListOutput.style.visibility = 
-}
+        if (this.checkIfWathclistContainsFilm(currentFilm.id)) {
+          this.removeWatchListData(currentFilm.id);
+
+          isUsingAsWatchList &&
+            this.renderData(this.getWatchListData(), App.watchListOutput, true);
+
+          btn.textContent = "AddToWatchLater";
+        } else {
+          this.addWatchlistData(currentFilm);
+          btn.textContent = "DeleteFromWatchList";
+        }
+      };
+    });
+  }
+
+  renderWatchlist() {
+    App.output.style.visibility = "hidden";
+    App.watchListOutput.style.visibility = "visible";
+
+    const watchListData = this.getWatchListData();
+
+    this.renderData(watchListData, App.watchListOutput, true);
+  }
 }
 
 new App();
-
-
-  // onWatchLaterClick() {
-
-  //   var movieId = 'your_movie_id';
-
-  //   if (this.watchList.indexOf(movieId) === -1) {
-  //     this.watchList.push(movieId);
-
-  //     localStorage.setItem('watchLaterList', JSON.stringify(this.watchList));
-
-  //     alert("Added");
-  //   } else {
-
-  //     alert("It's already here");
-  //   }
-  // }
