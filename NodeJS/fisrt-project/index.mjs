@@ -27,7 +27,7 @@ function main(data) {
     countriesLayouts.join(""),
     `
     div {
-      boder: 1px solid black;
+      border: 1px solid black;
       margin: 5px;
       padding: 5px;
       color: red;
@@ -37,6 +37,16 @@ function main(data) {
 
   htmlConstructor.generateFile("html");
   // htmlConstructor.generateFile("");
+
+  changeUser(data, 2);
+}
+
+function changeUser(data, index) {
+
+  data[index].username = "NewUsername";
+
+  // Запис оновлених даних у файл data.json
+  fs.writeFileSync("./data.json", JSON.stringify(data));
 }
 
 main(data);

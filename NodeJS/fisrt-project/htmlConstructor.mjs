@@ -19,7 +19,7 @@ export class HTMLConstructor {
             ${content}
         </body>
     </html>
-    `
+    `;
   }
 
   generateFoldersFromPath(path) {
@@ -30,8 +30,22 @@ export class HTMLConstructor {
     pathItems.forEach((p, i) => {
       const fullPathToCurrentFolder = pathItems.slice(0, i + 1).join("/");
       console.log(fullPathToCurrentFolder, "!!!!!!!!!!!!!!!!!!!!!!!");
-      !fs.existsSync(fullPathToCurrentFolder) && fs.mkdirSync(fullPathToCurrentFolder);
+      !fs.existsSync(fullPathToCurrentFolder) &&
+        fs.mkdirSync(fullPathToCurrentFolder);
     });
+  }
+
+  deleteContent(contentToDelete, path = "") {
+    const filePath = path
+      ? `${path}/${this.fileName}.html`
+      : `${this.fileName}.html`;
+
+    const fileContent = fs.readFileSync(filePath, "utf-8");
+    const updatedContent = fileContent.replace(contentToDelete, " ");
+
+    fs.writeFileSync(filePath, updatedContent);
+
+    return this;
   }
 
   generateFile(path = "") {
@@ -39,8 +53,12 @@ export class HTMLConstructor {
       this.generateFoldersFromPath(path);
     }
 
+    const filePath = path
+      ? `${path}/${this.fileName}.html`
+      : `${this.fileName}.html`;
+
     fs.writeFileSync(
-      path ? `${path}/${this.fileName}.html` : `${this.fileName}.html`,
+      filePath,
       this.generateBasicHTMLContent(this.content, this.style)
     );
 
