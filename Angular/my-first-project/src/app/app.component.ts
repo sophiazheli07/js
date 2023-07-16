@@ -7,24 +7,25 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title: string = 'my-first-project';
-  // a: number = 10;
-  // isTrue: boolean = false;
-  // user2: undefined = undefined;
-  // user3: null = null;
 
-obj = {city: "Kyiv", lat: 4513451345, lon: 33452345345134}
-  numbers = [1,2,3,4,5,6,7,8,9,10, "Igor"];
-  users = [{ name: "Igor", age: 23 }, { name: "Oleg", age: 23 }, { name: "Nastya", age: 23 }];
+  obj = { city: "Kyiv", lat: 1922982923, lon: 29339393939 }
+  numbers: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  users = [{ name: "Igor", age: 23 }, { name: "Oleg", age: 23 }, { name: "Nastya", age: 23 }, { age: "100" }];
 
   counter: number = 0;
 
-  // mutable
+  iterate() {
+    this.users.forEach((user) => {
+      user.name?.slice()
+    })
+  }
+
+  // mutable !!!
   increment() {
-    this.counter = this.counter + 1
+    this.counter = this.counter + 1;
   }
+
   decrement() {
-    this.counter = this.counter - 1
+    this.counter = this.counter - 1;
   }
-
-
 }
