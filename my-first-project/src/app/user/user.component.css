@@ -1,0 +1,14 @@
+.user-item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 5px;
+    width: 300px;
+    min-height: 250px;
+    justify-content: center;
+}
+
+.user-item button {
+    width: fit-content;
+}
