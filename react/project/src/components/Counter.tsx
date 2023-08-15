@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-export const Counter = () => {
+export const Counter = ({value, name: UserName, age}: any) => {
+
   const [counter, setCounter] = useState<number>(0);
   const [isCounterEnabled, setisCounterEnabled] = useState<boolean>(true);
 

@@ -20,7 +20,7 @@ export const Users = () => {
   //users re-render
   useEffect(() => {}, [users]);
 
-  //all re-renders (not really usabkle)
+  //all re-renders (not really usable)
   useEffect(() => {});
 
   return (
