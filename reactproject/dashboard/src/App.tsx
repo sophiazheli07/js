@@ -4,16 +4,19 @@ import "./App.css";
 
 import { FlexColumn } from "./components/shared/flex";
 import { Auth } from "./components/static/Auth";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router";
+import { DashboardContextProvider } from "./contexts/DashboardContext";
 
 function App() {
   return (
     <FlexColumn
       width="100%"
-      height="100vh"
-      alignItems="center"
-      justifyContent="center"
     >
-    <Auth/>
+      <DashboardContextProvider>
+        <RouterProvider router={router} />
+      </DashboardContextProvider>
+
     </FlexColumn>
   );
 }
