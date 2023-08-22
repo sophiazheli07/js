@@ -1,5 +1,4 @@
-import { Interface } from "readline";
-
-export Interface UserInterface {
-    user: 
+export interface UserInterface {
+  email: string;
+  password: string;
 }

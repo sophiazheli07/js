@@ -9,6 +9,7 @@ interface FlexPropsInterface {
     alignItems?: string;
     background?: string;
     gap?: string;
+    backgroundImage?: string;
 
 
 }
@@ -24,6 +25,8 @@ export const Flex = styled.div<FlexPropsInterface>`
     align-items: ${(props) => props.alignItems || "start"};
     background: ${(props) => props.background || "none"};
     gap: ${(props) => props.gap || "none"};
+    background-image: ${(props) => props.backgroundImage || "unset"};
+    
 
 `
 export const FlexRow = styled(Flex)`
