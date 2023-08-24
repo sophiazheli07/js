@@ -10,6 +10,7 @@ export const Dashboard = () => {
 
   const dashboardLinks = [
     { link: "users", text: "Users" },
+    { link: "posts", text: "Posts" },
     { link: "settings", text: "Settings" },
   ];
 
