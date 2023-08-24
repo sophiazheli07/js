@@ -1,23 +1,30 @@
 import React, { useContext, useEffect } from "react";
-import { FlexColumn } from "../shared/flex";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { FlexColumn, FlexRow } from "../shared/flex";
 import { DashboardContext } from "../../contexts/DashboardContext";
-import { useNavigate } from "react-router-dom";
 
 export const Dashboard = () => {
   const { user } = useContext(DashboardContext)!;
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
+  // if (!user) return <h1>Not authorized</h1>
 
-  if(!user) return <h1>Not authorized</h1>
+  const dashboardLinks = [
+    { link: "users", text: "Users" },
+    { link: "settings", text: "Settings" },
+  ];
 
   return (
     <FlexColumn width="100%">
-      <h1>Dashboard, hello {user?.email}</h1>
+      <FlexRow width="100%" background="grey" gap="10px" padding="10px">
+        {dashboardLinks.map(({ link, text }) => (
+          <Link style={{ fontSize: "30px" }} to={link}>
+            {text}
+          </Link>
+        ))}
+      </FlexRow>
+      <h1>Dasboard, Hello {user?.email}</h1>
+      <Link to="/posts">Posts</Link>
+      <Outlet />
     </FlexColumn>
   );
 };
