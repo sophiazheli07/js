@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,  } from "react";
 
 export const useFetchData = <TData>(url: string, options: RequestInit) => {
     const [data, setData] = useState<TData | null>(null) ;
@@ -15,7 +15,7 @@ export const useFetchData = <TData>(url: string, options: RequestInit) => {
             setIsLoading(false)
             setData(null)
         })
-    }, [])
+    }, [url])
     
 
     return { data, isLoading}
