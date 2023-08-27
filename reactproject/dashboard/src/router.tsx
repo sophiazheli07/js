@@ -6,6 +6,7 @@ import { PrivateRoute } from "./components/shared/PrivateRoute";
 import { Settings } from "./components/static/Settings";
 import { UsersList } from "./components/users/UsersList";
 import { PostsList } from "./components/posts/PostsList";
+import { CommentsList } from "./components/comments/CommentList";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ export const router = createBrowserRouter([
     children: [
       { path: "users", element: <UsersList /> },
       { path: "posts", element: <PostsList /> },
+      { path: "comments", element: <CommentsList /> },
       {
         path: "settings",
         element: <Settings />,

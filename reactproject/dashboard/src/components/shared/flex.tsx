@@ -10,6 +10,7 @@ interface FlexPropsInterface {
     background?: string;
     gap?: string;
     backgroundImage?: string;
+    flexDirection?: string;
 
 
 }
@@ -26,6 +27,7 @@ export const Flex = styled.div<FlexPropsInterface>`
     background: ${(props) => props.background || "none"};
     gap: ${(props) => props.gap || "none"};
     background-image: ${(props) => props.backgroundImage || "unset"};
+    flex-direction: ${(props) => props.flexDirection || "row"};
     
 
 `
