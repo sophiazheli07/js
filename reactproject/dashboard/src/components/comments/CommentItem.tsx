@@ -12,6 +12,7 @@ export const CommentItem: FC<CommentItemProps> = ({ comment }) => {
   
   return (
     <FlexColumn
+      width= "calc(100% - 300px)"
       background="pink"
       margin="5px"
       padding="10px"
