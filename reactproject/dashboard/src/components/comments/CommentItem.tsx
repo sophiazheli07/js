@@ -1,6 +1,6 @@
 // src/comments/CommentItem.tsx
 import React, { FC } from 'react';
-import { CommentInterface } from './types'; // Поправте шлях відповідно до вашої структури папок
+import { CommentInterface } from './types'; 
 import { FlexColumn } from '../shared/flex';
 
 interface CommentItemProps {

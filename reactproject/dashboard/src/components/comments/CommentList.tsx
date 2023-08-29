@@ -2,7 +2,7 @@
 import React, { useMemo } from "react";
 import { useFetchData } from "../../hooks/useFetchData";
 import { CommentInterface } from "./types";
-import { CommentItem } from "./CommentItem"; // Поправте шлях відповідно до вашої структури папок
+import { CommentItem } from "./CommentItem"; 
 import { FlexColumn } from "../shared/flex";
 
 export const CommentsList = () => {
