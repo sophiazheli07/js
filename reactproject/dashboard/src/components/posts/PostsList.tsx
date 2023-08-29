@@ -1,27 +1,22 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useContext, useMemo } from "react";
 import { Post } from "./types";
 import { useFetchData } from "../../hooks/useFetchData";
 import { FlexColumn } from "../shared/flex";
 import { PostItem } from "./PostItem";
+import { SearchContext } from "../../contexts/SearchContext";
+import { Search } from "../shared/Search";
 
 export const PostsList = () => {
 
-   const options = useMemo(() => ({ method: "GET"}), []);
+  const { posts, postsSearchResults } = useContext(SearchContext)!;
 
-  const { data, isLoading } = useFetchData<Post[]>(
-    "https://jsonplaceholder.typicode.com/posts", 
-    options
-  );
 
-  const fn = useCallback(() => {
-    const a = Math.random() * 100
-  }, [data]);
 
   return (
     <FlexColumn width="100%" alignItems="center">
-      <h1 onClick={() => fn()}>Posts</h1>
-      
-      {data?.map((post) => (
+      <h1>Posts</h1>
+      <Search/>
+      {posts?.map((post) => (
         <PostItem post={post} />
       ))}
     </FlexColumn>

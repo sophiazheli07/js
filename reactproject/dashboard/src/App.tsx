@@ -7,22 +7,22 @@ import { Auth } from "./components/static/Auth";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
 import { DashboardContextProvider } from "./contexts/DashboardContext";
-import { ScrollTopContextProvider } from 'react-use-scroll-to';
-
+import { ScrollTopContextProvider } from "react-use-scroll-to";
+import { SearchContext, SearchContextProvider } from "./contexts/SearchContext";
 
 function App() {
   return (
     <ScrollTopContextProvider>
-        <FlexColumn
-        width="100%"
-      >
+      <FlexColumn width="100%">
         <DashboardContextProvider>
-          <RouterProvider router={router} />
-        </DashboardContextProvider>
+          <SearchContextProvider>
 
+            <RouterProvider router={router} />
+            
+          </SearchContextProvider>
+        </DashboardContextProvider>
       </FlexColumn>
     </ScrollTopContextProvider>
-   
   );
 }
 
