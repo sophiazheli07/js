@@ -8,7 +8,7 @@ import { Search } from "../shared/Search";
 
 export const PostsList = () => {
 
-  const { posts, postsSearchResults } = useContext(SearchContext)!;
+  const { posts, postsSearchResults, value } = useContext(SearchContext)!;
 
 
 
@@ -16,7 +16,7 @@ export const PostsList = () => {
     <FlexColumn width="100%" alignItems="center">
       <h1>Posts</h1>
       <Search/>
-      {posts?.map((post) => (
+      {(value ? postsSearchResults : posts).map((post) => (
         <PostItem post={post} />
       ))}
     </FlexColumn>

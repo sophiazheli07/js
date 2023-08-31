@@ -1,37 +1,36 @@
-import React, {
-  ChangeEventHandler,
-  FC,
-  SyntheticEvent,
-  useCallback,
-  useContext,
-  useState,
-} from "react";
-import { FlexRow } from "./flex";
+import React, { FC, useCallback, useContext, useState } from 'react'
+import { FlexRow } from './flex';
 import { GiCancel } from "react-icons/gi";
-import { SearchContext } from "../../contexts/SearchContext";
+import { SearchContext } from '../../contexts/SearchContext';
+
+export type HTMLInputEvent = { target: { value: string, name: string } };
 
 interface PropsInterface {
 
 }
 
 export const Search: FC<PropsInterface> = () => {
-  const {value, setValue} = useContext(SearchContext)!;
+  const { value, setValue } = useContext(SearchContext)!;
+  
 
-
-  const onChange = useCallback((event: { target: { value: string } }) => {    //notes typization
-    // unstable SyntheticEvent<HTMLInputElement>
+  const onChange = useCallback((event: HTMLInputEvent) => {
+    // unstable SynteticEvent<HTMLInputElement>
     // ChangeEventHandler<HTMLInputElement>
+    // { target: { value: string } }
     setValue(event.target.value);
-  }, [setValue]);
+  }, [setValue]); 
 
   const onClear = useCallback(() => {
     setValue("");
   }, [setValue]);
 
+
+  
+
   return (
-    <FlexRow width="100%" justifyContent="center" padding="10px">
-      <input value={value} onChange={onChange} placeholder="search" />
-      <GiCancel size="20px" onClick={() => onClear()} />
-    </FlexRow>
-  );
-};
+   <FlexRow width='100%' justifyContent='center' padding="10px" gap="10px">
+        <input value={value} onChange={onChange} placeholder='search' />
+        <GiCancel size="20px" onClick={() => onClear()} />
+   </FlexRow>
+  )
+}
