@@ -1,17 +1,19 @@
-import { ReduxActionInterface } from "../types";
+import { ReduxActionInterface, TodoInteface } from "../types";
 
-export const todosReducer = (
-  todos: TodosInterface[],
-  action: ReduxActionInterface
-) => {
-  switch (action.type) {
-    case "CREATE_TODO":
-      return [...todos, action.payload];
+export const todosReducer = (todos: TodoInteface[] = [], action: ReduxActionInterface) => {
+    switch (action.type) {
 
-    case "UPDATE_TODO":
-        return todos.map({id}) => id === action.paylod.id )
+        case "CREATE_TODO":
+            return [...todos, action.payload];
 
-    default:
-      return todos;
-  }
-};
+        case "UPDATE_TODO":
+            return todos.map((todo) => todo.id === action.payload.id ? action.payload : todo);
+
+        case "DELETE_TODO":
+            // H/W finish deletment of todo !imutable
+            return todos
+
+        default:
+            return todos;
+    }
+}
