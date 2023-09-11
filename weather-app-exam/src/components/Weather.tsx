@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Title } from '../services/styled'
 
 const Weather = () => {
-  const [weatherData, setWeatherData] = useState<any>(null); // Use 'any' type for weatherData
+  const [weatherData, setWeatherData] = useState<any>(null); 
   const [location, setLocation] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const apiKey = 'bb71f6d0a5msh8bea47b10b6fd85p1e95cbjsnac5a7c3dc7df'; // Replace with your API key
+  const apiKey = 'bb71f6d0a5msh8bea47b10b6fd85p1e95cbjsnac5a7c3dc7df'; 
 
   const fetchData = async () => {
     try {
@@ -37,13 +38,13 @@ const Weather = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent the form from submitting and refreshing the page
+    e.preventDefault(); 
     fetchData();
   };
 
   return (
     <div>
-      <h1>Weather</h1>
+      <Title>Weather</Title>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
